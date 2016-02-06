@@ -3,9 +3,13 @@ package com.example.dharm.fasv2;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 /**
  * ViewPagerFragment is a generic fragment class that will be used for each page of the ViewPager.
@@ -26,8 +30,29 @@ public class ViewPagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.view_pager_fragment, container, false);
+        View view = inflater.inflate(R.layout.view_pager_fragment, container, false);
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(
+                R.id.recycler_view_in_fragment);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
+                getActivity().getBaseContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setHasFixedSize(true);
+
+        ArrayList<DoodleData> doodleDataList = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            DoodleData temp = new DoodleData("omega", "some really long title", "omega2", "omega3",
+                    "omega4", "omega5");
+            doodleDataList.add(temp);
+        }
+        RecyclerViewAdapter rva = new RecyclerViewAdapter(doodleDataList);
+        recyclerView.setAdapter(rva);
+
+        return view;
     }
 
     @Override
