@@ -26,9 +26,15 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
     }
 
-    private void setupViewPager(ViewPager viewpager) {
+    private void setupViewPager(ViewPager viewPager) {
         // Set up an adapter to manage the fragments in the view pager object.
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
+        ViewPagerFragmentAdapter adapter = new ViewPagerFragmentAdapter(
+                getSupportFragmentManager());
+        adapter.addFragment(new ViewPagerFragment(), "Popular");
+        adapter.addFragment(new ViewPagerFragment(), "Recent");
+        adapter.addFragment(new ViewPagerFragment(), "Vintage");
+        adapter.addFragment(new ViewPagerFragment(), "Favorites");
+        viewPager.setAdapter(adapter);
     }
 
     @Override
