@@ -1,18 +1,27 @@
 package com.example.dharm.fasv2;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.DoodleViewHolder> {
+public class RecyclerViewAdapter extends
+        RecyclerView.Adapter<RecyclerViewAdapter.DoodleViewHolder> {
+    private Context mContext;
     private List<DoodleData> mDoodleData;
 
-    public RecyclerViewAdapter() { this.mDoodleData = new ArrayList<>(); }
+    public RecyclerViewAdapter(Context context) {
+        mContext = context;
+        mDoodleData = new ArrayList<>();
+    }
 
     @Override
     public int getItemCount() { return mDoodleData.size(); }
@@ -20,7 +29,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(DoodleViewHolder doodleViewHolder, int position) {
         DoodleData doodleData= mDoodleData.get(position);
-        doodleViewHolder.vTitle.setText(doodleData.getTitle());
+        Picasso.with(mContext).load(mDoodleData.get(position).getImageUrl()).noFade()
+                .into(doodleViewHolder.imageView);
+        doodleViewHolder.titleView.setText(doodleData.getTitle());
 
     }
 
@@ -32,15 +43,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public static class DoodleViewHolder extends RecyclerView.ViewHolder {
-        protected TextView vTitle;
+        protected ImageView imageView;
+        protected TextView titleView;
 
-        public DoodleViewHolder(View v) {
-            super(v);
-            vTitle = (TextView) v.findViewById(R.id.title);
+        public DoodleViewHolder(View view) {
+            super(view);
+            imageView = (ImageView) view.findViewById(R.id.image);
+            titleView = (TextView) view.findViewById(R.id.title);
         }
     }
 
     public void SetDoodleData(ArrayList<DoodleData> doodleDataArrayList) {
-        this.mDoodleData = doodleDataArrayList;
+        mDoodleData = doodleDataArrayList;
     }
 }

@@ -57,7 +57,7 @@ public class ViewPagerFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         recyclerView.setHasFixedSize(true);
-        mRecyclerViewAdapter = new RecyclerViewAdapter();
+        mRecyclerViewAdapter = new RecyclerViewAdapter(getContext());
         recyclerView.setAdapter(mRecyclerViewAdapter);
         getDoodleData();
 
