@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">FASv2</string>
     <string name="action_settings">Settings</string>
-    <string name="placeholder">Data will go here!</string>
+    <string name="image_content_description">Doodle image in grid.</string>
 </resources>
