@@ -47,7 +47,7 @@ public class ViewPagerFragment extends Fragment {
         mFragmentParameters = this.getArguments().getStringArray("fragmentParameters");
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.view_pager_fragment, container, false);
+        View view = inflater.inflate(R.layout.main_view_pager_fragment, container, false);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(
                 R.id.recycler_view_in_fragment);

@@ -46,7 +46,7 @@ public class RecyclerViewAdapter extends
     @Override
     public DoodleViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(
-                R.layout.doodle_layout, viewGroup, false);
+                R.layout.main_card_view, viewGroup, false);
         return new DoodleViewHolder(itemView);
     }
 
