@@ -1,6 +1,9 @@
 package com.example.dharm.fasv2;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,12 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
 /**
  * ViewPagerFragment is a generic fragment class that will be used for each page of the ViewPager.
  */
 public class ViewPagerFragment extends Fragment {
+
+    private RecyclerView mRecyclerView;
 
     /**
      * Empty constructor for the PopularFragment class.
@@ -41,27 +44,17 @@ public class ViewPagerFragment extends Fragment {
             columns = 2;
         }
 
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.view_pager_fragment, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(
+        mRecyclerView = (RecyclerView) view.findViewById(
                 R.id.recycler_view_in_fragment);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity().getBaseContext(),
                 columns);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
-        recyclerView.setHasFixedSize(true);
-
-        ArrayList<DoodleData> doodleDataList = new ArrayList<>();
-        for (int i = 0; i < 150; i++) {
-            DoodleData temp = new DoodleData("omega", "some really long title", "omega2", "omega3",
-                    "omega4", "omega5");
-            doodleDataList.add(temp);
-        }
-        RecyclerViewAdapter rva = new RecyclerViewAdapter(doodleDataList);
-        recyclerView.setAdapter(rva);
+        mRecyclerView.setHasFixedSize(true);
 
         return view;
     }
@@ -69,6 +62,19 @@ public class ViewPagerFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        getDoodleData();
+    }
+
+    private void getDoodleData() {
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                this.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+
+        // Make sure that the device is actually connected to the internet before trying to get data
+        // about the Google doodles.
+        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+            new FetchDoodleDataAsyncTask(mRecyclerView).execute("popularity.desc");
+        }
     }
 
 }

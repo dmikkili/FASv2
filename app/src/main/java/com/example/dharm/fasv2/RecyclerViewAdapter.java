@@ -11,14 +11,10 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.DoodleViewHolder> {
     private List<DoodleData> mDoodleData;
 
-    public RecyclerViewAdapter(List<DoodleData> doodleData) {
-        this.mDoodleData = doodleData;
-    }
+    public RecyclerViewAdapter(List<DoodleData> doodleData) { this.mDoodleData = doodleData; }
 
     @Override
-    public int getItemCount() {
-        return mDoodleData.size();
-    }
+    public int getItemCount() { return mDoodleData.size(); }
 
     @Override
     public void onBindViewHolder(DoodleViewHolder doodleViewHolder, int position) {
