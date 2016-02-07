@@ -8,6 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -31,10 +34,21 @@ public class MainActivity extends AppCompatActivity {
         // Set up an adapter to manage the fragments in the view pager object.
         ViewPagerFragmentAdapter adapter = new ViewPagerFragmentAdapter(
                 getSupportFragmentManager());
-        adapter.addFragment(new ViewPagerFragment(), "Popular");
-        adapter.addFragment(new ViewPagerFragment(), "Recent");
-        adapter.addFragment(new ViewPagerFragment(), "Vintage");
-        adapter.addFragment(new ViewPagerFragment(), "Favorites");
+
+        Map<String, String[]> fragmentMap = new LinkedHashMap<>();
+        fragmentMap.put("Popular", new String[]{"popularity.desc", null});
+        fragmentMap.put("Recent", new String[]{"release_date.desc", "recent"});
+        fragmentMap.put("Vintage", new String[]{"release_date.desc", "vintage"});
+        fragmentMap.put("Favorites", new String[]{"popularity.desc", null});
+
+        for (Map.Entry<String, String[]> entry : fragmentMap.entrySet()) {
+            Bundle bundle = new Bundle();
+            bundle.putStringArray("fragmentParameters", entry.getValue());
+            ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
+            viewPagerFragment.setArguments(bundle);
+            adapter.addFragment(viewPagerFragment, entry.getKey());
+        }
+
         viewPager.setAdapter(adapter);
     }
 

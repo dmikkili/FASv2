@@ -58,7 +58,7 @@ public class FetchDoodleDataAsyncTask extends AsyncTask<String, Void, ArrayList<
             // parameter is one of 'recent', or 'vintage' to show only those Doodles.
             Uri.Builder uriBuilder = Uri.parse(FAS_API_BASE_URL).buildUpon()
                     .appendQueryParameter(SORT_PARAMETER, params[0]);
-            if (params.length == 2) uriBuilder.appendQueryParameter(params[1], "true");
+            if (params[1] != null) uriBuilder.appendQueryParameter(params[1], "true");
             Uri builtUri = uriBuilder.build();
 
             // Connect to FAS API to retrieve data about the doodles.

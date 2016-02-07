@@ -19,12 +19,12 @@ import android.view.ViewGroup;
 public class ViewPagerFragment extends Fragment {
 
     private RecyclerViewAdapter mRecyclerViewAdapter;
+    private String[] mFragmentParameters;
 
     /**
      * Empty constructor for the PopularFragment class.
      */
-    public ViewPagerFragment() {
-    }
+    public ViewPagerFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,8 @@ public class ViewPagerFragment extends Fragment {
         if (columns == 0 || columns == 1) {
             columns = 2;
         }
+
+        mFragmentParameters = this.getArguments().getStringArray("fragmentParameters");
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.view_pager_fragment, container, false);
@@ -75,7 +77,7 @@ public class ViewPagerFragment extends Fragment {
         // Make sure that the device is actually connected to the internet before trying to get data
         // about the Google doodles.
         if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
-            new FetchDoodleDataAsyncTask(mRecyclerViewAdapter).execute("popularity.desc");
+            new FetchDoodleDataAsyncTask(mRecyclerViewAdapter).execute(mFragmentParameters);
         }
     }
 
