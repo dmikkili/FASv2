@@ -1,6 +1,7 @@
 package com.example.dharm.fasv2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +28,19 @@ public class RecyclerViewAdapter extends
     public int getItemCount() { return mDoodleData.size(); }
 
     @Override
-    public void onBindViewHolder(DoodleViewHolder doodleViewHolder, int position) {
-        DoodleData doodleData= mDoodleData.get(position);
-        Picasso.with(mContext).load(mDoodleData.get(position).getImageUrl()).noFade()
+    public void onBindViewHolder(final DoodleViewHolder doodleViewHolder, final int position) {
+        final DoodleData doodleData = mDoodleData.get(position);
+        Picasso.with(mContext).load(doodleData.getImageUrl()).noFade()
                 .into(doodleViewHolder.imageView);
         doodleViewHolder.titleView.setText(doodleData.getTitle());
-
+        doodleViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                intent.putExtra("doodleData", doodleData);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
