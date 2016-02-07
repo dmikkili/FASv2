@@ -6,12 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.DoodleViewHolder> {
     private List<DoodleData> mDoodleData;
 
-    public RecyclerViewAdapter(List<DoodleData> doodleData) { this.mDoodleData = doodleData; }
+    public RecyclerViewAdapter() { this.mDoodleData = new ArrayList<>(); }
 
     @Override
     public int getItemCount() { return mDoodleData.size(); }
@@ -37,5 +38,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(v);
             vTitle = (TextView) v.findViewById(R.id.title);
         }
+    }
+
+    public void SetDoodleData(ArrayList<DoodleData> doodleDataArrayList) {
+        this.mDoodleData = doodleDataArrayList;
     }
 }

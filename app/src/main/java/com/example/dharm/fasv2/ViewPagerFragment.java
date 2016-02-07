@@ -18,7 +18,7 @@ import android.view.ViewGroup;
  */
 public class ViewPagerFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
+    private RecyclerViewAdapter mRecyclerViewAdapter;
 
     /**
      * Empty constructor for the PopularFragment class.
@@ -47,14 +47,17 @@ public class ViewPagerFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.view_pager_fragment, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(
                 R.id.recycler_view_in_fragment);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity().getBaseContext(),
                 columns);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
-        mRecyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
+        mRecyclerViewAdapter = new RecyclerViewAdapter();
+        recyclerView.setAdapter(mRecyclerViewAdapter);
+        getDoodleData();
 
         return view;
     }
@@ -62,7 +65,6 @@ public class ViewPagerFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        getDoodleData();
     }
 
     private void getDoodleData() {
@@ -73,7 +75,7 @@ public class ViewPagerFragment extends Fragment {
         // Make sure that the device is actually connected to the internet before trying to get data
         // about the Google doodles.
         if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
-            new FetchDoodleDataAsyncTask(mRecyclerView).execute("popularity.desc");
+            new FetchDoodleDataAsyncTask(mRecyclerViewAdapter).execute("popularity.desc");
         }
     }
 

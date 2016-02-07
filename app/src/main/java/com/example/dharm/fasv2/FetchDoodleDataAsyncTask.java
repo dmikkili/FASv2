@@ -2,7 +2,6 @@ package com.example.dharm.fasv2;
 
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -32,16 +31,16 @@ public class FetchDoodleDataAsyncTask extends AsyncTask<String, Void, ArrayList<
     private static final String PRICE_PARAMETER = "price";
     private static final String IMAGE_URL_PARAMETER = "image_url";
 
-    private RecyclerView mRecyclerView;
+    private RecyclerViewAdapter mRecyclerViewAdapter;
 
     /**
      * Constructor for the AsyncParcelableFetchDoodleDataTask object.
      *
-     * @param recyclerView The recycler view to attach the adapter with data to after the async task
-     *                     finishes retrieving the data.
+     * @param recyclerViewAdapter The adapter to notify about data changing after the background
+     *                            thread finishes execution.
      */
-    public FetchDoodleDataAsyncTask(RecyclerView recyclerView) {
-        mRecyclerView = recyclerView;
+    public FetchDoodleDataAsyncTask(RecyclerViewAdapter recyclerViewAdapter) {
+        mRecyclerViewAdapter = recyclerViewAdapter;
     }
 
     @Override
@@ -128,7 +127,8 @@ public class FetchDoodleDataAsyncTask extends AsyncTask<String, Void, ArrayList<
      * @param doodleDataArrayList A list of objects with information about the Google doodles.
      */
     public void onPostExecute(ArrayList<DoodleData> doodleDataArrayList) {
-        mRecyclerView.setAdapter(new RecyclerViewAdapter(doodleDataArrayList));
+        mRecyclerViewAdapter.SetDoodleData(doodleDataArrayList);
+        mRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     /**
